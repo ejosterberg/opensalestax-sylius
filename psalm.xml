@@ -4,6 +4,7 @@
     resolveFromConfigFile="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
+    findUnusedPsalmSuppress="false"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -18,7 +19,6 @@
     <issueHandlers>
         <UndefinedClass>
             <errorLevel type="suppress">
-                <!-- Sylius interfaces are a "suggest"-not-require dep -->
                 <referencedClass name="Sylius\Component\Taxation\Calculator\CalculatorInterface" />
                 <referencedClass name="Sylius\Component\Taxation\Model\TaxRateInterface" />
                 <referencedClass name="Sylius\Component\Core\Taxation\Strategy\TaxCalculationStrategyInterface" />
@@ -37,5 +37,23 @@
                 <referencedClass name="Sylius\Component\Core\Taxation\Strategy\TaxCalculationStrategyInterface" />
             </errorLevel>
         </UndefinedInterface>
+        <!-- Psalm 6 enforces #[Override] on every overriding method. We
+             implement Sylius interfaces (CalculatorInterface,
+             TaxCalculationStrategyInterface, ConfigurationInterface, etc.)
+             and Symfony abstracts (Bundle, Extension); adding #[Override]
+             everywhere is fine but PHP 8.2 (our minimum) doesn't ship the
+             Override attribute. Globally suppress until we bump the floor
+             to PHP 8.3. -->
+        <MissingOverrideAttribute>
+            <errorLevel type="suppress">
+                <directory name="src" />
+            </errorLevel>
+        </MissingOverrideAttribute>
+        <UnusedIssueHandlerSuppression>
+            <errorLevel type="suppress">
+                <directory name="src" />
+                <file name="psalm.xml" />
+            </errorLevel>
+        </UnusedIssueHandlerSuppression>
     </issueHandlers>
 </psalm>
