@@ -4,7 +4,6 @@
     resolveFromConfigFile="true"
     findUnusedBaselineEntry="true"
     findUnusedCode="false"
-    findUnusedPsalmSuppress="false"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns="https://getpsalm.org/schema/config"
     xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
@@ -17,26 +16,6 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <UndefinedClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Sylius\Component\Taxation\Calculator\CalculatorInterface" />
-                <referencedClass name="Sylius\Component\Taxation\Model\TaxRateInterface" />
-                <referencedClass name="Sylius\Component\Core\Taxation\Strategy\TaxCalculationStrategyInterface" />
-                <referencedClass name="Sylius\Component\Core\Model\OrderInterface" />
-                <referencedClass name="Sylius\Component\Addressing\Model\ZoneInterface" />
-            </errorLevel>
-        </UndefinedClass>
-        <UndefinedDocblockClass>
-            <errorLevel type="suppress">
-                <referencedClass name="Sylius\Component\Core\Model\OrderInterface" />
-            </errorLevel>
-        </UndefinedDocblockClass>
-        <UndefinedInterface>
-            <errorLevel type="suppress">
-                <referencedClass name="Sylius\Component\Taxation\Calculator\CalculatorInterface" />
-                <referencedClass name="Sylius\Component\Core\Taxation\Strategy\TaxCalculationStrategyInterface" />
-            </errorLevel>
-        </UndefinedInterface>
         <!-- Psalm 6 enforces #[Override] on every overriding method. We
              implement Sylius interfaces (CalculatorInterface,
              TaxCalculationStrategyInterface, ConfigurationInterface, etc.)
@@ -49,11 +28,5 @@
                 <directory name="src" />
             </errorLevel>
         </MissingOverrideAttribute>
-        <UnusedIssueHandlerSuppression>
-            <errorLevel type="suppress">
-                <directory name="src" />
-                <file name="psalm.xml" />
-            </errorLevel>
-        </UnusedIssueHandlerSuppression>
     </issueHandlers>
 </psalm>
