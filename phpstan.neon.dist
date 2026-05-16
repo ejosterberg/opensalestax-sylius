@@ -1,0 +1,27 @@
+parameters:
+    level: max
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/Application/*
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # Sylius interfaces ship as suggest-not-require; PHPStan can't resolve
+        # them when sylius/sylius isn't in vendor. We accept "not found" hits
+        # for those names — the actual interface compatibility is exercised
+        # at runtime in the live-VM verification AND in the dev-deps Sylius
+        # install used by CI.
+        - identifier: class.notFound
+          message: '#Sylius\\Component#'
+
+        # Test anonymous classes in cache stubs — references-by-ref to an
+        # outer $store property can't be statically analyzed.
+        - identifier: property.onlyWritten
+          paths:
+              - tests/Unit/Cache/OstaxCacheTest.php
+              - tests/Unit/Calculator/OstaxCalculatorTest.php
+        - identifier: missingType.iterableValue
+          paths:
+              - tests/Unit/Cache/OstaxCacheTest.php
+              - tests/Unit/Calculator/OstaxCalculatorTest.php

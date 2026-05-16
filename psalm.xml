@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<psalm
+    errorLevel="3"
+    resolveFromConfigFile="true"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+            <directory name="tests/Application" />
+        </ignoreFiles>
+    </projectFiles>
+    <issueHandlers>
+        <UndefinedClass>
+            <errorLevel type="suppress">
+                <!-- Sylius interfaces are a "suggest"-not-require dep -->
+                <referencedClass name="Sylius\Component\Taxation\Calculator\CalculatorInterface" />
+                <referencedClass name="Sylius\Component\Taxation\Model\TaxRateInterface" />
+                <referencedClass name="Sylius\Component\Core\Taxation\Strategy\TaxCalculationStrategyInterface" />
+                <referencedClass name="Sylius\Component\Core\Model\OrderInterface" />
+                <referencedClass name="Sylius\Component\Addressing\Model\ZoneInterface" />
+            </errorLevel>
+        </UndefinedClass>
+        <UndefinedDocblockClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Sylius\Component\Core\Model\OrderInterface" />
+            </errorLevel>
+        </UndefinedDocblockClass>
+        <UndefinedInterface>
+            <errorLevel type="suppress">
+                <referencedClass name="Sylius\Component\Taxation\Calculator\CalculatorInterface" />
+                <referencedClass name="Sylius\Component\Core\Taxation\Strategy\TaxCalculationStrategyInterface" />
+            </errorLevel>
+        </UndefinedInterface>
+    </issueHandlers>
+</psalm>

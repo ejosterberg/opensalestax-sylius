@@ -1,0 +1,54 @@
+{
+    "name": "ejosterberg/opensalestax-sylius",
+    "description": "Sylius bundle: replace Sylius's built-in tax calculation with self-hosted OpenSalesTax — destination-based US sales tax.",
+    "type": "symfony-bundle",
+    "license": ["Apache-2.0", "GPL-2.0-or-later"],
+    "keywords": ["sylius", "symfony", "symfony-bundle", "tax", "sales-tax", "opensalestax", "us-tax"],
+    "homepage": "https://github.com/ejosterberg/opensalestax-sylius",
+    "authors": [
+        {"name": "Eric Osterberg", "email": "ejosterberg@gmail.com"}
+    ],
+    "require": {
+        "php": ">=8.2",
+        "ext-json": "*",
+        "ejosterberg/opensalestax": "^0.1",
+        "psr/cache": "^2.0 || ^3.0",
+        "psr/log": "^2.0 || ^3.0",
+        "symfony/config": "^6.4 || ^7.0",
+        "symfony/dependency-injection": "^6.4 || ^7.0",
+        "symfony/http-kernel": "^6.4 || ^7.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.59",
+        "phpstan/phpstan": "^1.11",
+        "phpunit/phpunit": "^10.5",
+        "sylius/addressing": "^1.14",
+        "sylius/core": "^1.14",
+        "sylius/taxation": "^1.13",
+        "vimeo/psalm": "^5.26"
+    },
+    "suggest": {
+        "sylius/sylius": "^1.13 — the Sylius platform this bundle plugs into"
+    },
+    "autoload": {
+        "psr-4": {"OpenSalesTax\\Sylius\\": "src/"}
+    },
+    "autoload-dev": {
+        "psr-4": {"OpenSalesTax\\Sylius\\Tests\\": "tests/"}
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": "php-cs-fixer fix --dry-run --diff",
+        "lint-fix": "php-cs-fixer fix",
+        "stan": "phpstan analyse --no-progress",
+        "psalm": "psalm --no-progress"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true
+        }
+    }
+}

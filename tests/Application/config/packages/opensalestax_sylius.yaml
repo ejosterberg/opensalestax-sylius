@@ -1,0 +1,42 @@
+# Sample bundle configuration. Drop this in your Sylius app at
+# config/packages/opensalestax_sylius.yaml and adjust to taste.
+#
+# In production, source secrets from environment variables (or
+# Symfony's secrets vault) — never commit a real api_key.
+
+opensalestax_sylius:
+    # Required. Base URL of your OpenSalesTax engine.
+    # Must be http:// or https://.
+    engine_url: '%env(OSTAX_ENGINE_URL)%'
+
+    # Optional. Sent as the X-API-Key header on every outbound
+    # engine call. Most self-hosted deployments don't need this.
+    api_key: '%env(default::OSTAX_API_KEY)%'
+
+    # Per-request timeout. Engine SLO is sub-second; 5s is
+    # generous and gives a clear signal when something is wrong.
+    timeout_seconds: 5.0
+
+    # Default false: engine errors return 0 tax + log a warning.
+    # Sylius's built-in pipeline handles the fallback.
+    # Set to true for stricter behavior (engine errors throw and
+    # surface in Sylius admin as an order error).
+    fail_hard: false
+
+    # OST category sent for line items with no per-product
+    # mapping. One of:
+    #   general | clothing | groceries | prescription_drugs
+    #   prepared_food | digital_goods
+    default_category: general
+
+    # Per-state nexus filter. Empty list = collect everywhere.
+    # Setting [MN, WI] means only orders shipping to MN or WI
+    # get the engine call; everything else returns 0 tax (and
+    # Sylius's built-in pipeline takes over).
+    nexus_states: []
+    # nexus_states: ['MN', 'WI']
+
+    # Cache TTL for memoizing engine results (in seconds).
+    # 0 disables the cache. Default 1 hour balances engine
+    # load against rate-update propagation latency.
+    cache_ttl_seconds: 3600

@@ -1,0 +1,31 @@
+# Composer
+/vendor/
+composer.lock
+
+# PHPUnit
+.phpunit.cache/
+.phpunit.result.cache
+/coverage/
+
+# PHPStan / Psalm
+/.phpstan-cache/
+/.psalm-cache/
+
+# php-cs-fixer
+.php-cs-fixer.cache
+
+# Editor
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Captain session lock (gitignored per portfolio policy)
+.claude-session-lock.json
+
+# Sylius test app build artifacts
+/tests/Application/var/
+/tests/Application/public/bundles/
