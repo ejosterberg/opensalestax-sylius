@@ -11,7 +11,7 @@
     "require": {
         "php": ">=8.2",
         "ext-json": "*",
-        "ejosterberg/opensalestax": "^0.2.0",
+        "ejosterberg/opensalestax": "^0.3.0",
         "psr/cache": "^2.0 || ^3.0",
         "psr/log": "^2.0 || ^3.0",
         "symfony/config": "^6.4 || ^7.0",

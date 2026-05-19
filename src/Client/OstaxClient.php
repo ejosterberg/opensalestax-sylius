@@ -12,6 +12,7 @@ use OpenSalesTax\Exceptions\OpenSalesTaxException;
 use OpenSalesTax\LineItem;
 use OpenSalesTax\Responses\CalculateResponse;
 use OpenSalesTax\Responses\HealthResponse;
+use OpenSalesTax\Shipping;
 use OpenSalesTax\Sylius\Config\OstaxConfig;
 use Psr\Http\Client\ClientInterface as PsrHttpClient;
 
@@ -62,6 +63,28 @@ class OstaxClient
         return $this->sdk->calculate(
             address: new Address(zip5: $zip5),
             lineItems: [new LineItem(amount: $amount, category: $category)],
+        );
+    }
+
+    /**
+     * Calls `POST /v1/calculate` with a single line item PLUS a top-level
+     * shipping segment (engine v0.59.0+ via the SDK's first-class
+     * `Shipping` value object). The strategy uses this when the order has
+     * a non-zero shipping total — the engine applies per-state shipping-
+     * taxability rules internally (MN, MO/VA, MD distinctions).
+     *
+     * @throws OpenSalesTaxException on engine error / network failure
+     */
+    public function calculateWithShipping(
+        string $zip5,
+        string $itemAmount,
+        string $category,
+        string $shippingAmount,
+    ): CalculateResponse {
+        return $this->sdk->calculate(
+            address: new Address(zip5: $zip5),
+            lineItems: [new LineItem(amount: $itemAmount, category: $category)],
+            shipping: new Shipping(amount: $shippingAmount, separatelyStated: true),
         );
     }
 

@@ -6,6 +6,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0-alpha.3] — 2026-05-19
+
+### Added
+
+- **CP-9 partial: `OstaxClient::calculateWithShipping()`**. New facade
+  method on `OstaxClient` that calls `/v1/calculate` with both a single
+  line item AND a top-level first-class `shipping` segment (engine
+  v0.59.0+ via `ejosterberg/opensalestax` v0.3.0). Returns the engine's
+  full `CalculateResponse` including the populated
+  `$shipping->taxAmount` so the strategy can surface shipping tax as a
+  separate adjustment. Not yet wired into `OstaxTaxationStrategy` —
+  the strategy currently iterates per-OrderItemUnit, and surfacing
+  shipping tax requires adding a separate order-level adjustment path
+  (deferred to a follow-up release). Merchants who need shipping tax
+  today can call `OstaxClient::calculateWithShipping()` directly from
+  custom code.
+
+### Changed
+
+- **Bumps `ejosterberg/opensalestax` constraint from `^0.2.0` to
+  `^0.3.0`.** Picks up the new third arg on `Client::calculate(addr,
+  lines, shipping?)` plus the `CalculateResponse::$shipping` and
+  `$coverageWarning` response fields. Backward compatible — no
+  behavior change at the strategy level.
+
+### Notes
+
+- The engine returns `null` shipping on this SDK version when older
+  engine builds (pre-v0.59.0) silently ignore the field. Flag-gate
+  via `OstaxClient::sdk->capabilities()->features->shippingFirstClass`
+  if you need to detect this at setup time.
+
 ## [0.1.0-alpha.2] — 2026-05-19
 
 ### Changed
